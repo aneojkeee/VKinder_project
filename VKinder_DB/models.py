@@ -20,6 +20,7 @@ class User(Base):
     def __str__(self):
         return f'{self.vk_user_id, self.first_name, self.sex, self.age, self.city}'
 
+
 class Offer(Base):
     __tablename__ = 'offer'
 
@@ -37,6 +38,7 @@ class Offer(Base):
     def __str__(self):
         return f'{self.vk_offer_id, self.first_name, self.last_name, self.sex, self.age, self.city}'
 
+
 class User_Offer(Base):
     __tablename__ = 'user_offer'
 
@@ -44,12 +46,14 @@ class User_Offer(Base):
     vk_user_id = sq.Column(sq.Integer, sq.ForeignKey('user.vk_user_id'), nullable=False)
     vk_offer_id = sq.Column(sq.Integer, sq.ForeignKey('offer.vk_offer_id'), nullable=False)
     black_list = sq.Column(sq.Integer, nullable=False, default=0)
+    favorite_list = sq.Column(sq.Integer, nullable=False, default=0)
 
     user = relationship('User', back_populates='user_offer', cascade='all, delete')
     offer = relationship('Offer', back_populates='user_offer', cascade='all, delete')
 
     def __str__(self):
         return f'{self.black_list}'
+
 
 class Photo(Base):
     __tablename__ = 'photo'
@@ -62,6 +66,7 @@ class Photo(Base):
 
     def __str__(self):
         return f'{self.vk_offer_id, self.photo_url}'
+
 
 class Interest(Base):
     __tablename__ = 'interest'
@@ -89,4 +94,5 @@ class Interest_Person(Base):
 
 
 def create_table(engine):
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
