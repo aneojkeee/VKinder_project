@@ -24,7 +24,7 @@ def add_user(vk_user_id, first_name, sex, age, city):
     Для простоты будем называть его "пользователь".
     :param vk_user_id: id пользовател
     :param first_name: имя пользователя. Имя нужно лишь для обращения к пользователю при общении с ботом
-    :param sex: пол пользователя. 0 - женский, 1 - мужской
+    :param sex: пол пользователя. 1 - женский, 2 - мужской
     :param age: возраст пользователя
     :param city: город пользователя
     '''
@@ -43,7 +43,7 @@ def add_offer(vk_user_id, vk_offer_id, first_name, last_name, sex, age, city):
     :param vk_offer_id: id предложения
     :param first_name: имя предложения
     :param last_name: фамилия предложения
-    :param sex: пол предложения. 0 - женский, 1 - мужской
+    :param sex: пол предложения. 1 - женский, 2 - мужской
     :param age: возраст предложения
     :param city: город предложения
     '''
