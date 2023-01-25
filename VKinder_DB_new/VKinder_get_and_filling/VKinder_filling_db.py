@@ -1,6 +1,5 @@
 from VKinder_DB_folder.VKinder_DB import create_db, add_user, add_offer, add_photo
-from VKinder_get_data import VKinder
-from tokens_vk import token_gr, token
+from VKinder_get_and_filling.VKinder_get_data import VKinder
 
 
 def filling_db(token, user_id):
@@ -23,4 +22,3 @@ def filling_db(token, user_id):
         add_photo(vk_offer_id=dict_p['id_offer'], photo_url=dict_p['top_photos'])
 
 
-filling_db(token, 1)

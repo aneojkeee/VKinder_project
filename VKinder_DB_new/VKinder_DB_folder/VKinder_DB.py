@@ -1,20 +1,21 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists, create_database
 import sqlalchemy
-import pathlib
-from pathlib import Path
 import json
 from VKinder_DB_folder import models as m
+import os
 
+current = os.getcwd()
+folder_name = 'VKinder_DB_folder'
+file_name = 'config_db.json'
+full_path = os.path.join(current, file_name)
 
-path = Path(r'D:\Python_project\VKinder_DB_new\VKinder_DB_folder\config_db.json')
-with open(path, 'r') as user_file:
+with open(full_path, 'r') as user_file:
     db_type, login, password, hostname, db_port, db_name = json.load(user_file).values()
 
 DSN = f'{db_type}://{login}:{password}@{hostname}:{db_port}/{db_name}'
 engine = sqlalchemy.create_engine(DSN)
 Session = sessionmaker(bind=engine)
-
 
 def create_db():
     if not database_exists(engine.url):
@@ -204,7 +205,7 @@ def get_offer(vk_user_id):
 
 def get_favorite(vk_user_id):
     '''
-            Функция предоставляет сведения о избранных предложениях
+            Функция предоставляет сведения об избранных предложениях
     :param vk_user_id: id пользователя
     :return: лист, содержащий листы со сведениями о предложениях.
             Формат листа:
@@ -227,3 +228,13 @@ def get_favorite(vk_user_id):
             filter(m.UserOffer.black_list == 0).all()
         result = get_offer_info(vk_user_id, offer)
     return result
+
+
+def get_user():
+    '''
+        Функция предоставляет сведения об id всех пользователей
+        :return: лист с id пользователей
+    '''
+    with Session() as session:
+        return [user[0] for user in session.query(m.User.vk_user_id).all()]
+

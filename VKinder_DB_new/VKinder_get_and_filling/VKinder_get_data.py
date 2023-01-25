@@ -84,7 +84,9 @@ class VKinder:
                     },
             response_type='json'
         )
+        print(res)
         u_bdate = res['response'][0]
+        print(u_bdate)
         u_city = res['response'][0]['city']['id']
         u_sex = res['response'][0]['sex']
         u_name = res['response'][0]['first_name']
@@ -93,6 +95,7 @@ class VKinder:
                      'city': u_city,
                      'sex': u_sex,
                      'city_name': res['response'][0]['city']['title']}
+        print(self.dict_get_user)
 
     def search_user(self):
         """
@@ -118,7 +121,7 @@ class VKinder:
                      **self.params},
             response_type='json'
         )
-
+        print(res)
         for user in res['response']['items']:
             if user['is_closed'] == True:
                 continue

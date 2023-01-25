@@ -1,42 +1,36 @@
-2023-01-23 20:47:39,167 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:48,534 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/users.get
                         Status_code: 200
-                        Params: {'user_id': 1, 'fields': 'sex,city,bdate', 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'user_id': 1, 'fields': 'sex,city,bdate', 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         
-2023-01-23 20:47:39,435 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:49,276 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/users.search
                         Status_code: 200
-                        Params: {'count': 15, 'fields': 'city,bdate,sex,counters', 'city': 2, 'sex': 1, 'age_from': 33, 'age_to': 43, 'status': '6', 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'count': 15, 'fields': 'city,bdate,sex,counters', 'city': 2, 'sex': 1, 'age_from': 33, 'age_to': 43, 'status': '6', 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         
-2023-01-23 20:47:39,656 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:49,554 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/photos.get
                         Status_code: 200
-                        Params: {'owner_id': 485536749, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'owner_id': 485536749, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         
-2023-01-23 20:47:40,069 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:49,957 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/photos.get
                         Status_code: 200
-                        Params: {'owner_id': 363202589, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'owner_id': 439638699, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         
-2023-01-23 20:47:40,507 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:50,350 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/photos.get
                         Status_code: 200
-                        Params: {'owner_id': 357735991, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'owner_id': 225949904, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         
-2023-01-23 20:47:40,971 INFO 
-                        Date and time: 2023-01-23 20.47
+2023-01-23 21:40:50,837 INFO 
+                        Date and time: 2023-01-23 21.40
                         Method: https://api.vk.com/method/photos.get
                         Status_code: 200
-                        Params: {'owner_id': 280154663, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
-                        
-2023-01-23 20:47:41,397 INFO 
-                        Date and time: 2023-01-23 20.47
-                        Method: https://api.vk.com/method/photos.get
-                        Status_code: 200
-                        Params: {'owner_id': 188014516, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.cK0U-3zNjP7muvUtn6cASIUGxNeFy6UoAiHcTWvIh3eo8l6SHLjy-3pb6hfglQ_wRTqkrwED9sye2169-4UlR_If7DHOlhRZjdWT_8gpQBmLQWMp15idRy_t0zygVPjW6yKL7D877s_2iT6aRqLJ9U5gI6u-aKEKx6CpP2vSEKb-ojJVghMFaGXFjROVfbpHWJwbeyFF2GANLZ6r2UVQKA', 'v': '5.131'}
+                        Params: {'owner_id': 280154663, 'album_id': 'profile', 'extended': 1, 'count': 15, 'access_token': 'vk1.a.5aaA2301-1hgeQjceP5763C4vtMClGUT7P8s7oCuF6yI5sgS-jtbPkLjHDb1wH-XiqN83kiSne2VKIVNC-LaD3pzu3o8u8aB5bdCKKz7Ol-IPUMF1c_tSgTQd4o8sJhaLU2cuQ-wvr2AS09yTzRMnAXAXCdmTnzHf0OHhkstDcCiA16OhAENoJa1ZFKQgSmacR4K3BCGujTXdQ8FSox5rQ', 'v': '5.131'}
                         

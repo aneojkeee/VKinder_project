@@ -98,4 +98,3 @@ def create_table(engine):
 
 def delete_table(engine):
     Base.metadata.drop_all(engine)
-
