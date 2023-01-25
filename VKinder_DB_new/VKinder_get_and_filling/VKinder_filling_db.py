@@ -1,4 +1,4 @@
-from VKinder_DB_folder.VKinder_DB import create_db, add_user, add_offer, add_photo
+from VKinder_DB_folder.VKinder_DB import create_db, add_user, add_offer, add_photo, engine
 from VKinder_get_and_filling.VKinder_get_data import VKinder
 
 
@@ -10,7 +10,6 @@ def filling_db(token, user_id):
     """
     vkinder = VKinder(token, user_id)
     user_info, offer_info, photos_info = vkinder.activate_get_search_photos()
-    # print(user_info, offer_info, photos_info)
     vkinder.clear_func()
 
     create_db()
@@ -20,5 +19,3 @@ def filling_db(token, user_id):
 
     for dict_p in photos_info:
         add_photo(vk_offer_id=dict_p['id_offer'], photo_url=dict_p['top_photos'])
-
-

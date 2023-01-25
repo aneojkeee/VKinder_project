@@ -18,13 +18,16 @@ engine = sqlalchemy.create_engine(DSN)
 Session = sessionmaker(bind=engine)
 
 def create_db():
+    """
+        Функция создает таблицы базы данных
+    """
     if not database_exists(engine.url):
         create_database(engine.url)
     m.create_table(engine)
 
 
 def add_user(vk_user_id, first_name, sex, age, city):
-    '''
+    """
         Функция добавляет пользователя в базу данных. В данном случае user - это пользователь, который ищет пару.
     Для простоты будем называть его "пользователь"
     :param vk_user_id: id пользовател
@@ -32,7 +35,7 @@ def add_user(vk_user_id, first_name, sex, age, city):
     :param sex: пол пользователя. 1 - женский, 2 - мужской
     :param age: возраст пользователя
     :param city: город пользователя
-    '''
+    """
     with Session() as session:
         user_find = session.query(m.User.vk_user_id).all()
         if vk_user_id not in [user[0] for user in user_find]:
@@ -42,7 +45,7 @@ def add_user(vk_user_id, first_name, sex, age, city):
 
 
 def add_offer(vk_user_id, vk_offer_id, first_name, last_name, sex, age, city):
-    '''
+    """
         Функция добавляет предложение в базу данных. В данном случае offer - это предложенный пользователю человек из поиска.
     Для простоты будем называть его "предложением"
     :param vk_user_id: id пользователя
@@ -52,7 +55,7 @@ def add_offer(vk_user_id, vk_offer_id, first_name, last_name, sex, age, city):
     :param sex: пол предложения. 1 - женский, 2 - мужской
     :param age: возраст предложения
     :param city: город предложения
-    '''
+    """
     with Session() as session:
         offer_find = session.query(m.Offer.vk_offer_id).all()
         if vk_offer_id not in [offer[0] for offer in offer_find]:
@@ -68,13 +71,13 @@ def add_offer(vk_user_id, vk_offer_id, first_name, last_name, sex, age, city):
 
 
 def add_black_list(vk_user_id, vk_offer_id):
-    '''
+    """
         Функция добавляет предложение в черный список, если пользователь больше не хочет видеть предложение.
     Предложение скрывается из поиска навсегда
     0 - предложение актуально, 1 - предложение исключено (исключается) из поиска
     :param vk_user_id: id пользователя
     :param vk_offer_id: id предложения
-    '''
+    """
     with Session() as session:
         session.query(m.UserOffer).\
             filter(m.UserOffer.vk_offer_id == vk_offer_id).\
@@ -85,12 +88,12 @@ def add_black_list(vk_user_id, vk_offer_id):
 
 
 def add_favorite(vk_user_id, vk_offer_id):
-    '''
+    """
         Функция добавляет предложение в избранное, если пользователь хочет сохранить предложение.
     0 - предложение неактуально, 1 - предложение включено (включается) в избранное
     :param vk_user_id: id пользователя
     :param vk_offer_id: id предложения
-    '''
+    """
     with Session() as session:
         session.query(m.UserOffer).\
             filter(m.UserOffer.vk_offer_id == vk_offer_id).\
@@ -101,27 +104,27 @@ def add_favorite(vk_user_id, vk_offer_id):
 
 
 def add_photo(vk_offer_id, photo_url):
-    '''
+    """
         Функция сохраняет в БД ссылки на фотографии предложения
     :param vk_offer_id: id предложения
     :param photo_url: лист со ссылками на фотографии
-    '''
+    """
     with Session() as session:
         for url in photo_url:
-            photo_find = session.query(m.Photo).filter(m.Photo.photo_url == url).all()
+            photo_find = session.query(m.Photo).filter(m.Photo.id_photo == url).all()
             if len(photo_find) == 0:
-                photo = m.Photo(photo_url=url,  vk_offer_id=vk_offer_id)
+                photo = m.Photo(id_photo=url,  vk_offer_id=vk_offer_id)
                 session.add(photo)
             session.commit()
 
 
 def add_interest(interest, vk_user_id=0, vk_offer_id=0):
-    '''
+    """
         Функция добавляет в БД интересы пользователя или предложения
     :param interest: наименование интереса пользователя или предложения
     :param vk_user_id: id пользователя
     :param vk_offer_id: id предложения
-    '''
+    """
     with Session() as session:
         interest_find = session.query(m.Interest.interest).filter(m.Interest.interest == interest)
         if interest not in [interest[0] for interest in interest_find]:
@@ -144,7 +147,7 @@ def add_interest(interest, vk_user_id=0, vk_offer_id=0):
 
 
 def get_offer_info(vk_user_id, offer):
-    '''
+    """
         Функция предоставляет сведения о предложениях. Функция является служебной
     :param vk_user_id: id пользователя
     :param vk_user_id: объект, содержащий сведения о предложениях
@@ -154,7 +157,7 @@ def get_offer_info(vk_user_id, offer):
             Формат предложения:
             [id предложения, 'имя', 'фамилия', пол, возраст, 'город',
             [лист со ссылками на фотографии], [лист с общими интересами пользователя и предложения]]
-    '''
+    """
     offer_list = []
     with Session() as session:
         user_interests = session.query(m.Interest.interest). \
@@ -164,7 +167,7 @@ def get_offer_info(vk_user_id, offer):
             offer_list.append([])
             for el in note:
                 offer_list[-1].append(el)
-            photo = session.query(m.Photo.photo_url).filter(m.Photo.vk_offer_id == note[0]).all()
+            photo = session.query(m.Photo.id_photo).filter(m.Photo.vk_offer_id == note[0]).all()
             offer_list[-1].append([url[0] for url in photo])
             offer_interests = session.query(m.Interest.interest). \
                 join(m.InterestPerson, m.InterestPerson.interest_id == m.Interest.interest_id). \
@@ -178,7 +181,7 @@ def get_offer_info(vk_user_id, offer):
 
 
 def get_offer(vk_user_id):
-    '''
+    """
         Функция предоставляет сведения о всех предложениях
     :param vk_user_id: id пользователя
     :return: лист, содержащий листы со сведениями о предложениях
@@ -187,7 +190,7 @@ def get_offer(vk_user_id):
             Формат предложения:
             [id предложения, 'имя', 'фамилия', пол, возраст, 'город',
             [лист со ссылками на фотографии], [лист с общими интересами пользователя и предложения]]
-    '''
+    """
     with Session() as session:
         offer = session.query(m.Offer.vk_offer_id,
                               m.Offer.first_name,
@@ -204,7 +207,7 @@ def get_offer(vk_user_id):
 
 
 def get_favorite(vk_user_id):
-    '''
+    """
             Функция предоставляет сведения об избранных предложениях
     :param vk_user_id: id пользователя
     :return: лист, содержащий листы со сведениями о предложениях.
@@ -213,7 +216,7 @@ def get_favorite(vk_user_id):
             Формат предложения:
             [id предложения, 'имя', 'фамилия', пол, возраст, 'город',
             [лист со ссылками на фотографии], [лист с общими интересами пользователя и предложения]]
-    '''
+    """
     with Session() as session:
         offer = session.query(m.Offer.vk_offer_id,
                               m.Offer.first_name,
@@ -231,10 +234,10 @@ def get_favorite(vk_user_id):
 
 
 def get_user():
-    '''
+    """
         Функция предоставляет сведения об id всех пользователей
-        :return: лист с id пользователей
-    '''
+    :return: лист с id пользователей
+    """
     with Session() as session:
         return [user[0] for user in session.query(m.User.vk_user_id).all()]
 

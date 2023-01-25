@@ -4,7 +4,7 @@ import time
 import logging
 from datetime import date
 from datetime import datetime
-
+from pprint import pprint
 
 logging.basicConfig(level=logging.INFO, filename="main.log", filemode="w",
                     format="%(asctime)s %(levelname)s %(message)s")
@@ -34,15 +34,14 @@ class VKinder:
 
     def _send_request(self, http_method, uri_path, params=None, json=None, response_type=None):
         """
-        Через этот метод будут отправляться все запросы ко всем API.
-        Здесь мы можем обрабатывать любые исключения, логирвать запросы и т.п.
+            Через этот метод будут отправляться все запросы ко всем API.
+        Здесь мы можем обрабатывать любые исключения, логировать запросы и т.п.
 
         :param http_method: GET/POST/PUT/PATCH/DELETE
         :param uri_path: uri API, например method/users.get
         :param params:
         :param json:
         :param response_type: тип ответа, например json
-        :return:
         """
         host = 'https://api.vk.com/method'
         response = requests.request(http_method, f'{host}/{uri_path}', params=params, json=json)  # отправляем запрос
@@ -71,8 +70,8 @@ class VKinder:
 
     def get_user(self):
         """
-        Получаем пользователя, используя унаследованный метод _send_request и передаем словарь
-        в датакласс AllInfo
+            Получаем пользователя, используя унаследованный метод _send_request и передаем словарь
+        в self.dict_get_user
         """
         res = self._send_request(
             http_method='GET',
@@ -84,9 +83,7 @@ class VKinder:
                     },
             response_type='json'
         )
-        print(res)
         u_bdate = res['response'][0]
-        print(u_bdate)
         u_city = res['response'][0]['city']['id']
         u_sex = res['response'][0]['sex']
         u_name = res['response'][0]['first_name']
@@ -95,15 +92,14 @@ class VKinder:
                      'city': u_city,
                      'sex': u_sex,
                      'city_name': res['response'][0]['city']['title']}
-        print(self.dict_get_user)
 
     def search_user(self):
         """
-        Используем информацию, полученную от метода get_user(пол, возраст, город пользователя общающегося с ботом)
-        из датакласса AllInfo.
+            Используем информацию, полученную от метода get_user(пол, возраст, город пользователя общающегося с ботом)
+        из self.dict_get_user.
         Через унаследованный метод _send_request, передаем VK параметры поиска людей для знакомства,
         получаем список словарей с данными предложений подходящих пользователю.
-        Передаем эту информацию в датакласс AllInfo.
+        Передаем эту информацию в self.list_search_user.
         """
 
         age = self.dict_get_user['b_date']
@@ -121,7 +117,6 @@ class VKinder:
                      **self.params},
             response_type='json'
         )
-        print(res)
         for user in res['response']['items']:
             if user['is_closed'] == True:
                 continue
@@ -140,12 +135,12 @@ class VKinder:
 
     def get_fotos_user(self):
         """
-        Используем информацию, полученную от метода search_user(а именно список людей
-        предложенных пользователю для знакомства) из датакласса AllInfo.
+            Используем информацию, полученную от метода search_user(а именно список людей
+        предложенных пользователю для знакомства) из self.list_search_user.
         Осуществляем отбор 3 топовых фото по количеству лайков.
         Передаем список словарей с данными которые буду выводиться в чате с ботом пользователю.
-        Имя, Фамилия, ссылка на профиль, 3 ссылки на фото предложения.
-        Так же передаем эти данные в датакласс AllInfo.
+        Имя, Фамилия, ссылка на профиль, 3 ссылки на фото предложения, передаем эти данные в
+        self.list_photos_search_user.
         """
         for data in self.list_search_user:
             res = self._send_request(
@@ -165,22 +160,23 @@ class VKinder:
 
             list_id_likes = []
             for i in res['response']['items']:
-                url_photo = i['sizes'][-1]['url']
+                id_photo = i['id']
                 likes = i['likes']['count']
-                list_id_likes.append({'url': url_photo, 'likes': likes})
+                list_id_likes.append({'id_img': id_photo, 'likes': likes})
             list_id_likes.sort(key=lambda dictionary: dictionary['likes'])
-
+            pprint((list_id_likes))
             if len(list_id_likes) >= 3:
-                list_top_photos = [list_id_likes[-1]['url'], list_id_likes[-2]['url'], list_id_likes[-3]['url']]
+                list_top_photos = [list_id_likes[-1]['id_img'], list_id_likes[-2]['id_img'], list_id_likes[-3]['id_img']]
             else:
-                list_top_photos = [url['url'] for url in list_id_likes]
+                list_top_photos = [url['id_img'] for url in list_id_likes]
             self.list_photos_search_user.append({'id_offer': data["id_offer"],
                                                 'top_photos': list_top_photos,
-                                                'profile': f'https://vk.com/id{data["id_offer"]}'})
+                                                })
 
     def activate_get_search_photos(self):
         """
-        Метод активирует, все предыдущие методы данного класса и проверяет на наличие даты рождения у пользователя
+            Метод активирует, все предыдущие методы данного класса и
+            проверяет на наличие даты рождения у пользователя
         """
         try:
             self.get_user()
@@ -192,12 +188,9 @@ class VKinder:
                 print('Дата рождения отсутствует')
 
     def clear_func(self):
+        """Функция очищает значение класса VKinder"""
+
         self.user_id = 0
         self.dict_get_user = {}
         self.list_search_user = []
         self.list_photos_search_user = []
-
-
-# user_id = 1
-# vkinder = Vkinder(token, user_id)
-# print(vkinder.activate_get_search_photos())

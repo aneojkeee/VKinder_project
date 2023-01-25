@@ -58,7 +58,7 @@ class UserOffer(Base):
 class Photo(Base):
     __tablename__ = 'photo'
 
-    photo_url = sq.Column(sq.String, primary_key=True)
+    id_photo = sq.Column(sq.Integer, primary_key=True)
     vk_offer_id = sq.Column(sq.Integer, sq.ForeignKey('offer.vk_offer_id'), nullable=False)
 
     offer = relationship('Offer', back_populates='photo', cascade='all, delete')

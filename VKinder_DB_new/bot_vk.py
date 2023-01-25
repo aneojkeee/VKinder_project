@@ -4,7 +4,7 @@ from random import randrange
 from vk_api.longpoll import VkLongPoll, VkEventType
 from VKinder_get_and_filling.tokens_vk import token_gr, token
 from VKinder_get_and_filling.VKinder_filling_db import filling_db
-from VKinder_DB_folder.VKinder_DB import get_offer, get_user, add_favorite, get_favorite
+from VKinder_DB_folder.VKinder_DB import get_offer, get_user, add_favorite, get_favorite, create_db
 
 vk_session = vk_api.VkApi(token=token_gr)
 longpoll = VkLongPoll(vk_session)
@@ -20,9 +20,8 @@ def get_but(text, color):
         "color": f"{color}"
     }
 
-one_time = True
 keyboard = {
-    "one_time": one_time,
+    "one_time": True,
     "buttons": [
         [get_but('Начать поиск', 'secondary')],
         [get_but('Далее', 'secondary')],
@@ -34,9 +33,17 @@ keyboard = {
 keyboard = json.dumps(keyboard, ensure_ascii=False).encode('utf-8')
 keyboard = str(keyboard.decode('utf-8'))
 
-def sender(user_id, text):
-    vk_session.method('messages.send',
-                      {'user_id': user_id, 'message': text, 'random_id': randrange(10 ** 7), 'keyboard': keyboard})
+def sender(user_id, text, attachment=None):
+    post = {'user_id': user_id,
+            'message': text,
+            'random_id': randrange(10 ** 7),
+            'attachment': attachment,
+            'keyboard': keyboard}
+
+    if attachment != None:
+        post['attachment'] = attachment
+
+    vk_session.method('messages.send', post)
 
 counter = 0
 for event in longpoll.listen():
@@ -50,39 +57,56 @@ for event in longpoll.listen():
                 sender(event.user_id, f"Добро пожаловать {event.user_id} в VKinder!")
 
             elif request == "начать поиск":
-                sender(event.user_id, f"Подождите")
-                if event.user_id not in get_user():
-                    filling_db(token, event.user_id)
+                try:
+                    sender(event.user_id, f"Подождите")
+                    if event.user_id not in get_user():
+                        filling_db(token, event.user_id)
 
-                list_all_offer = get_offer(event.user_id)
-                print(list_all_offer)
-                iter_all_offer = iter(list_all_offer)
-                sender(event.user_id, f"Нашел для тебя интересную пару, нажми - 'Далее'!")
-                counter = 0
+                    list_all_offer = get_offer(event.user_id)
+                    print(list_all_offer)
+                    iter_all_offer = iter(list_all_offer)
+                    sender(event.user_id, f"Нашел для тебя интересную пару, нажми - 'Далее'!")
+                    counter = 0
+                except:
+                    create_db()
+                    sender(event.user_id, f"Пожалуйста нажмите ещё раз Начать поиск")
+                    continue
 
             elif request == "далее":
 
-                if len(list_all_offer) == counter:
+                try:
+                    if len(list_all_offer) == counter:
+                        sender(event.user_id, f"""
+                        Это все результаты(
+                        Начни заново ;)
+                        """)
+                        continue
+
+                    print(counter)
+                    offer_1 = next(iter_all_offer)
+                    att = [f"photo{offer_1[0]}_{i}" for i in offer_1[6]]
+                    print(f"{','.join(att)}")
                     sender(event.user_id, f"""
-                    Это все результаты(
-                    Начни заново ;)
-                    """)
+                    {offer_1[1]} {offer_1[2]}
+                    \nhttps://vk.com/id{offer_1[0]}
+                    """, ','.join(att))
+                    counter += 1
+                except NameError:
+                    sender(event.user_id, f"Нажмите сначала начать поиск!")
                     continue
 
-                print(counter)
-                offer_1 = next(iter_all_offer)
-                sender(event.user_id, f"""
-                {offer_1[1]} {offer_1[2]}
-                https://vk.com/id{offer_1[0]}
-                """)
-                counter += 1
-
             elif request == "добавить в избранное":
-                add_favorite(event.user_id, offer_1[0])
-                sender(event.user_id, f"{offer_1[1]} добавлен в избранное")
+                try:
+                    add_favorite(event.user_id, offer_1[0])
+                    sender(event.user_id, f"{offer_1[1]} добавлен в избранное")
+                except NameError:
+                    sender(event.user_id, f"Нажмите сначала и посмотрите кто приглянулся ;)!")
+                    continue
 
             elif request == "показать избранное":
                 favorites_list = get_favorite(event.user_id)
+                if not favorites_list:
+                    sender(event.user_id, "Вы ещё никого не добавили в избранное (")
                 for i in favorites_list:
                     sender(event.user_id, f"""
                                 {i[1]} {i[2]}
