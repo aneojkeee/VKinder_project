@@ -11,6 +11,12 @@ longpoll = VkLongPoll(vk_session)
 
 
 def get_but(text, color):
+    """
+    Данная функция предназначена для взаимодействия пользователя с интерфейсом приложения.
+    :param text: передает текст кнопки
+    :param color: передает цвет кнопки
+    :return: возвращает текст и цвет кнопки
+    """
     return {
         "action": {
             "type": "text",
