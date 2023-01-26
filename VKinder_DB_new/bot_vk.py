@@ -12,7 +12,7 @@ longpoll = VkLongPoll(vk_session)
 
 def get_but(text, color):
     """
-    Данная функция предназначена для взаимодействия пользователя с интерфейсом приложения.
+    Данная функция предназначена для взаимодействия пользователя и интерфейса приложения.
     :param text: передает текст кнопки
     :param color: передает цвет кнопки
     :return: возвращает текст и цвет кнопки
@@ -40,6 +40,13 @@ keyboard = json.dumps(keyboard, ensure_ascii=False).encode('utf-8')
 keyboard = str(keyboard.decode('utf-8'))
 
 def sender(user_id, text, attachment=None):
+    """
+    Данная функция обеспечивает взаимодействие приложения с пользователем.
+    :param user_id: id пользователя
+    :param text: текст сообщения пользователя
+    :param attachment: медиафайл к сообщению
+    :return:
+    """
     post = {'user_id': user_id,
             'message': text,
             'random_id': randrange(10 ** 7),
